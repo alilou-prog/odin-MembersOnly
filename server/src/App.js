@@ -2,7 +2,7 @@ require("dotenv").config()
 const path = require("path")
 const cors = require("cors")
 const express = require('express')
-const router = require("./routes/main_router")
+const main_router = require("./routes/main_router")
 const app = express()
 
 // config
@@ -19,4 +19,4 @@ app.listen(PORT, () => {
     console.log(`Server Running. Listening on port ${PORT}`)
 })
 
-app.use('/', router)
+app.use('/', main_router)
