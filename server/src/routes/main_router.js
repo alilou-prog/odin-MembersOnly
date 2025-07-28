@@ -5,4 +5,6 @@ const main_ctrls = require("../contollers/main_controller")
 main_router.get('/', main_ctrls.get_index)
 main_router.get('/api/messages', main_ctrls.get_all_messages)
 
+main_router.post('/api/users', main_ctrls.sign_up_user);
+
 module.exports = main_router
