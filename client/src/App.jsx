@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
 import Message from "./components/Message";
 import './styles/main.css'
+import { Link } from "react-router-dom";
 
 function App() {
   const [messages, set_messages] = useState(null)
@@ -19,8 +20,8 @@ function App() {
     <>
       <h1>Home page</h1>
       <nav className="auth">
-        <a href="/log-in">Log in</a>
-        <a href="/sign-up">sign up</a>
+        <Link to="/users/log-in-proxy">Login</Link>
+        <Link to="/users/sign-up">Sign up</Link>
       </nav>
       {messages ?
         (<ul>
