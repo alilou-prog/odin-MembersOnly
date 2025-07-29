@@ -8,6 +8,7 @@ const main_router = require("./routes/main_router")
 
 // auth
 const express_session = require("express-session")
+const passport = require("./config/passport")
 const pgSession = require('connect-pg-simple')(express_session)
 const pg_pool = new pg.Pool({
     connectionString: process.env.DB_URL
@@ -35,6 +36,8 @@ app.use(express_session({
     saveUninitialized: false,
     cookie: {maxAge: 24 * 60 * 60 * 1000},
 }))
+app.use(passport.session())
+
 
 // routing
 app.use('/', main_router)

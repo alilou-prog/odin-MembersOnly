@@ -16,8 +16,9 @@ CREATE TABLE IF NOT EXISTS "User" (
   first_name VARCHAR ( 255 ),
   last_name VARCHAR ( 255 ),
   username VARCHAR ( 255 ),
+  is_admin BOOLEAN,
   password VARCHAR ( 255 ),
-  is_admin BOOLEAN
+  salt VARCHAR (255)
 );
 
 CREATE TABLE IF NOT EXISTS "Message" (
@@ -28,21 +29,6 @@ CREATE TABLE IF NOT EXISTS "Message" (
   CONSTRAINT fk_user FOREIGN KEY (user_id) REFERENCES "User"(id) ON DELETE CASCADE
 );
 `
-
-const seed_SQL = `
-INSERT INTO "User" (first_name, last_name, username, password, is_admin) 
-VALUES
-  ('ali', 'ali', 'ali', 'pwd', true),
-  ('aymen', 'aymen', 'aymen', 'pwd', false),
-  ('alilou', 'alilou', 'alilou', 'pwd', false);
-
-INSERT INTO "Message" (title, text, user_id)
-VALUES
-  ('ADMIN', 'Hello from the admin (ali)', 1),
-  ('GYM', 'aymen loves gym', 2),
-  ('Porgramming', 'alilou is a good programmer', 3);
-`;
-
 
 async function main() {
   console.log("seeding...");
@@ -57,7 +43,6 @@ async function main() {
   await client.connect();
   await client.query(reset_SQL);
   await client.query(model_SQL);
-  await client.query(seed_SQL);
   await client.end();
   console.log("done");
 }

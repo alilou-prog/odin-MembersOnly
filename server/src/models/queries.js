@@ -6,15 +6,16 @@ async function get_all_messages() {
 }
 
 async function create_user(user) {
-    await pool.query(`INSERT INTO \"User\" (first_name, last_name, username, password, is_admin)
+    await pool.query(`INSERT INTO \"User\" (first_name, last_name, username, is_admin, password, salt)
         VALUES
-            ($1, $2, $3, $4, $5)`,
+            ($1, $2, $3, $4, $5, $6)`,
         [
             user.first_name,
             user.last_name,
             user.username,
+            user.is_admin,
             user.password,
-            user.is_admin
+            user.salt,
         ])
 }
 

@@ -8,7 +8,7 @@ function LoginProxy() {
             const response = await fetch('/api/users/log-in');
 
             const json = await response.json();
-            if(json.status) {
+            if(json.is_auth) {
                 navigate(`/users/${json.user.username}/dashbord`, {state: {user: json.user}})
             }
             else {
@@ -32,7 +32,7 @@ function Login() {
     async function handle_submit(e) {
         e.preventDefault();
         const form_data = new FormData(e.currentTarget);
-        const response = await fetch('/api/log-in', {
+        const response = await fetch('/api/users/log-in', {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -40,7 +40,7 @@ function Login() {
             body: JSON.stringify(Object.fromEntries(form_data.entries())),
         });
         const json = await response.json();
-        if (json && json.status) {
+        if (json.is_auth) {
             navigate(`/users/${json.user.username}/dashbord`, {state: {user: json.user}})
         }
         else {
