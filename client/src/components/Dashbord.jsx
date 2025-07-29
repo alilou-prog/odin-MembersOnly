@@ -56,7 +56,7 @@ export default function Dashboard() {
                 <div className="messages">
                     {messages ?
                         (<ul>
-                            {messages.map(message => <Message key={message.id} message={message} />)}
+                            {messages.map(message => <Message key={message.id} message={message} set_fetch_signal={set_fetch_signal}/>)}
                         </ul>)
                         : <span> Loading </span>
                     }
