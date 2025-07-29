@@ -5,14 +5,14 @@ function LoginProxy() {
     const navigate = useNavigate();
     useEffect(() => {
         async function check_already_auth() {
-            const response = await fetch('/api/users/log-in');
+            const response = await fetch('/api/users/login');
 
             const json = await response.json();
             if(json.is_auth) {
                 navigate(`/users/${json.user.username}/dashbord`, {state: {user: json.user}})
             }
             else {
-                navigate('/users/log-in')
+                navigate('/users/login')
             }
         }
         check_already_auth();
@@ -32,7 +32,7 @@ function Login() {
     async function handle_submit(e) {
         e.preventDefault();
         const form_data = new FormData(e.currentTarget);
-        const response = await fetch('/api/users/log-in', {
+        const response = await fetch('/api/users/login', {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",

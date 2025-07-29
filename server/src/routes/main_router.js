@@ -6,7 +6,8 @@ main_router.get('/', main_ctrls.get_index)
 main_router.get('/api/messages', main_ctrls.get_all_messages)
 
 main_router.post('/api/users', main_ctrls.sign_up_user);
-main_router.get('/api/users/log-in', main_ctrls.check_already_auth)
-main_router.post('/api/users/log-in', main_ctrls.log_in_user)
+main_router.get('/api/users/login', main_ctrls.check_already_auth)
+main_router.post('/api/users/login', main_ctrls.log_in_user)
+main_router.delete('/api/users/logout', main_ctrls.logout)
 
 module.exports = main_router

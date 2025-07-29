@@ -20,8 +20,8 @@ function App() {
     <>
       <h1>Home page</h1>
       <nav className="auth">
-        <Link to="/users/log-in-proxy">Login</Link>
-        <Link to="/users/sign-up">Sign up</Link>
+        <Link to="/users/login-proxy">Login</Link>
+        <Link to="/users/signup">Sign up</Link>
       </nav>
       {messages ?
         (<ul>

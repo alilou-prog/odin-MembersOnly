@@ -8,9 +8,9 @@ import Dashboard from './components/Dashbord.jsx'
 
 const router = createBrowserRouter([
   { path: '/', element: <App /> },
-  { path: '/users/log-in-proxy', element: <LoginProxy /> },
-  { path: '/users/log-in', element: <Login />},
-  { path: '/users/sign-up', element: <Signup /> },
+  { path: '/users/login-proxy', element: <LoginProxy /> },
+  { path: '/users/login', element: <Login />},
+  { path: '/users/signup', element: <Signup /> },
   { path: '/users/:user_id/dashbord', element: <Dashboard />}
 ])
 

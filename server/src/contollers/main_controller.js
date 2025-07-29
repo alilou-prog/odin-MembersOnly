@@ -41,22 +41,31 @@ async function sign_up_user(req, res) {
 const log_in_user = [
     passport.authenticate('local'),
     (req, res) => {
-        if(req.isAuthenticated()) {
-            res.json({user: req.user, is_auth: true, msg: "Authenticated successfully"})
+        if (req.isAuthenticated()) {
+            res.json({ user: req.user, is_auth: true, msg: "Authenticated successfully" })
         }
         else {
-            res.json({user: null, is_auth: false, msg: "Authenticatin failed"})
+            res.json({ user: null, is_auth: false, msg: "Authenticatin failed" })
         }
     }
 ]
 
 function check_already_auth(req, res) {
     if (req.isAuthenticated()) {
-        res.json({user: req.user, is_auth: true, msg: "Already authenticated"});
+        res.json({ user: req.user, is_auth: true, msg: "Already authenticated" });
     }
     else {
-        res.json({user: null, is_auth: false, msg: "Session not found"})
+        res.json({ user: null, is_auth: false, msg: "Session not found" })
     }
+}
+
+function logout(req, res, next) {
+    req.logout((err) => {
+        if (err) {
+            res.json({is_logout: false, err})
+        }
+    });
+    res.json({is_logout: true, err: null})
 }
 
 module.exports = {
@@ -65,4 +74,5 @@ module.exports = {
     sign_up_user: [...validate_user, sign_up_user],
     log_in_user,
     check_already_auth,
+    logout,
 }
