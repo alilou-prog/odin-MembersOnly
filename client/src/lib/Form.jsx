@@ -4,7 +4,7 @@ export default function Form({form}) {
     return (
         <>
         <h1>{form.title}</h1>
-        <form className={styles} action="">
+        <form className={styles} onSubmit={form.on_submit}>
             {form.inputs.map(input => 
                 <div className={styles.input}>
                     <label htmlFor={input.name} >{input.label}</label>

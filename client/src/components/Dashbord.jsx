@@ -10,6 +10,7 @@ export default function Dashboard() {
     const [messages, set_messages] = useState()
     const navigate = useNavigate()
     const user = useLocation().state?.user
+    const [dialog_open, set_dialog_open] = useState(false)
 
     async function logout() {
         const res = await fetch(`/api/users/logout`, {
@@ -31,8 +32,8 @@ export default function Dashboard() {
         fetch_data()
     }, [])
 
-    function create_message(e) {
-        console.log("test")
+    function show_dialog() {
+        set_dialog_open(true)
         dialog_ref.current.showModal();
     }
 
@@ -44,10 +45,10 @@ export default function Dashboard() {
                 {JSON.stringify(err)}
             </div>
             <section className="messages">
-                <dialog ref={dialog_ref}>
-                    <CreateMessage />
+                <dialog ref={dialog_ref} open={dialog_open}>
+                    <CreateMessage set_dialog_open={set_dialog_open}/>
                 </dialog>
-                <button onClick={create_message}>Create message</button>
+                <button onClick={show_dialog}>Create message</button>
                 <div className="messages">
                     {messages ?
                         (<ul>
