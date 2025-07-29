@@ -2,19 +2,15 @@ import { useEffect, useState } from "react"
 import Message from "./components/Message";
 import './styles/main.css'
 import { Link } from "react-router-dom";
+import { fetch_messages } from "./lib/common";
 
 function App() {
   const [messages, set_messages] = useState(null)
   useEffect(() => {
-    async function fetch_messages() {
-      const res = await fetch('/api/messages');
-      if (!res.ok) {
-        console.error("App: Failed to fetch messages");
-        return;
-      }
-      set_messages(await res.json());
+    async function fetch_data() {
+      set_messages(await fetch_messages())
     }
-    fetch_messages()
+    fetch_data()
   }, [])
   return (
     <>
