@@ -8,15 +8,34 @@ export default function Message({ message, set_fetch_signal }) {
             <p>{message.user_id}</p>
         </>
     )
+
+    const update_form = {
+        inputs: [
+            {
+                name: "title",
+                type: "text",
+                placeholder: message.title,
+            },
+            {
+                name: "text",
+                type: "text",
+                placeholder: message.text,
+            }
+        ],
+    }
+
     const elem = {
+        id: message.id,
         content,
+        update_url: `/api/messages/${message.id}`,
         delete_url: `/api/messages/${message.id}`,
-        set_fetch_signal
+        set_fetch_signal,
+        update_form,
     }
 
     return (
         <li>
-            <CrudElement elem={elem}/>
+            <CrudElement elem={elem} />
         </li>
     )
 }
