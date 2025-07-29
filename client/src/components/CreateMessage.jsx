@@ -1,6 +1,6 @@
 import Form from "../lib/Form"
 
-export default function CreateMessage({ set_dialog_open }) {
+export default function CreateMessage({ close_dialog, set_fetch_signal }) {
     async function create_message(e) {
         e.preventDefault()
         const form_data = new FormData(e.currentTarget);
@@ -13,11 +13,12 @@ export default function CreateMessage({ set_dialog_open }) {
         })
         if (res.ok) {
             console.log("Message created succeffully")
+            set_fetch_signal(true)
         }
         else {
             console.error("Failed to create message")
         }
-        set_dialog_open(false)
+        close_dialog()
     }
 
     const form = {
