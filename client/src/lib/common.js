@@ -8,7 +8,7 @@ async function fetch_messages() {
 }
 
 async function check_already_auth() {
-    const response = await fetch('/api/users/login');
+    const response = await fetch('/api/users/check-auth');
 
     const json = await response.json();
     if (json.is_auth) {

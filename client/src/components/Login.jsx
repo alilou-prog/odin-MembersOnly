@@ -1,26 +1,5 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { check_already_auth } from "../lib/common";
-
-function LoginProxy() {
-    const navigate = useNavigate();
-
-    useEffect(() => {
-        (async () => {
-            const result = await check_already_auth();
-            if (result.is_auth) {
-                navigate(`/users/${result.json.user.username}/dashboard`, {
-                    state: { user: result.json.user },
-                });
-            } else {
-                navigate('/users/login');
-            }
-        })();
-    }, [navigate]);
-
-    return <h1>Loading</h1>;
-}
-
 
 function Login() {
     const navigate = useNavigate();
@@ -65,4 +44,4 @@ function Login() {
     );
 }
 
-export { LoginProxy, Login }
+export {  Login }

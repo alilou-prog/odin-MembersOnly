@@ -6,7 +6,7 @@ const { auth_action } = require("../lib/passport_utils")
 main_router.get('/', main_ctrls.get_index)
 
 main_router.post('/api/users', main_ctrls.sign_up_user);
-main_router.get('/api/users/login', main_ctrls.check_already_auth)
+main_router.get('/api/users/check-auth', main_ctrls.check_already_auth)
 main_router.post('/api/users/login', main_ctrls.log_in_user)
 main_router.delete('/api/users/logout', main_ctrls.logout)
 

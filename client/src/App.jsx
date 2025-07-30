@@ -17,8 +17,6 @@ function App() {
         navigate(`/users/${result.json.user.username}/dashboard`, {
           state: { user: result.json.user },
         });
-      } else {
-        navigate('/users/login');
       }
     })();
 
@@ -33,7 +31,7 @@ function App() {
     <>
       <h1>Home page</h1>
       <nav className="auth">
-        <Link to="/users/login-proxy">Login</Link>
+        <Link to="/users/login">Login</Link>
         <Link to="/users/signup">Sign up</Link>
       </nav>
       {messages ?
