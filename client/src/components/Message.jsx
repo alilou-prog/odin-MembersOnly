@@ -5,7 +5,7 @@ export default function Message({ message, set_fetch_signal }) {
         <div className="content">
             <h2>{message.title}</h2>
             <p>{message.text}</p>
-            <p>{message.user_id}</p>
+            <p>By: {message.author ? message.author : "Unkown"}</p>
         </div>
     )
 

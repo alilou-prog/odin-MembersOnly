@@ -8,7 +8,7 @@ function get_index(req, res) {
 
 async function get_all_messages(req, res) {
     const messages = await db.get_all_messages();
-    if (req.user) {
+    if (req.user && req.user.is_member) {
         res.json(messages);
     }
     else {

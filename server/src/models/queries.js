@@ -1,8 +1,14 @@
 const pool = require('./pool')
 
+async function get_username(user_id) {
+    const { rows } = await pool.query(`SELECT username FROM \"User\" WHERE id = $1`, [user_id]);
+    return rows[0].username;
+}
+
 async function get_all_messages() {
     const { rows } = await pool.query("SELECT * FROM \"Message\";");
-    return rows;
+    const update_rows = await Promise.all(rows.map(async (message) => { return { ...message, author: await get_username(message.user_id) } }))
+    return update_rows;
 }
 
 async function create_user(user) {
@@ -45,7 +51,7 @@ module.exports = {
     get_all_messages,
     create_user,
     set_member,
-    
+
     create_message,
     delete_message,
     update_message,
