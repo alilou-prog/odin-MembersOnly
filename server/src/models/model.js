@@ -5,11 +5,6 @@ require('dotenv').config()
 
 const DB_URL = process.env.DB_URL;
 
-const reset_SQL = `
-DROP TABLE IF EXISTS "User" CASCADE;
-DROP TABLE IF EXISTS "Message";
-`
-
 const model_SQL = `
 CREATE TABLE IF NOT EXISTS "User" (
   id INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
@@ -32,17 +27,11 @@ CREATE TABLE IF NOT EXISTS "Message" (
 `
 
 async function main() {
-  console.log("seeding...");
+  console.log("Creating the model...");
   const client = new Client({
-    // host: process.env.DB_HOST,
-    // port: process.env.DB_PORT,
-    // password: process.env.DB_PASSWORD,
-    // database: process.env.DB_NAME,
-    // user: process.env.DB_USER,
     connectionString: DB_URL,
   });
   await client.connect();
-  await client.query(reset_SQL);
   await client.query(model_SQL);
   await client.end();
   console.log("done");

@@ -29,7 +29,7 @@ app.use(express.static(assets_path, {index: '_'}))
 app.use(express_session({
     store: new pgSession({
         pool: pg_pool,
-        tableName: 'user-sessions',
+        tableName: 'session',
     }),
     secret: "some secret",
     resave: false,
