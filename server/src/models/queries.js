@@ -19,6 +19,12 @@ async function create_user(user) {
         ])
 }
 
+async function set_member(user_id) {
+    await pool.query(`UPDATE \"User\" 
+    SET is_member = true WHERE id = $1`,
+        [user_id])
+}
+
 async function create_message(message) {
     await pool.query(`INSERT INTO "Message" (title, text, user_id)
         VALUES
@@ -28,7 +34,7 @@ async function create_message(message) {
 async function update_message(message) {
     await pool.query(`UPDATE "Message"
         SET title = $1, text = $2 WHERE id = $3`,
-    [message.title, message.text, message.id])
+        [message.title, message.text, message.id])
 }
 
 async function delete_message(id) {
@@ -38,7 +44,9 @@ async function delete_message(id) {
 module.exports = {
     get_all_messages,
     create_user,
+    set_member,
+    
     create_message,
     delete_message,
-    update_message
+    update_message,
 }

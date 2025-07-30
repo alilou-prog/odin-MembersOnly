@@ -12,11 +12,13 @@ export default function Message({ message, set_fetch_signal }) {
     const update_form = {
         inputs: [
             {
+                label: "Title",
                 name: "title",
                 type: "text",
                 placeholder: message.title,
             },
             {
+                label: "Text",
                 name: "text",
                 type: "text",
                 placeholder: message.text,

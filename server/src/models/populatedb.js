@@ -16,7 +16,8 @@ CREATE TABLE IF NOT EXISTS "User" (
   first_name VARCHAR ( 255 ),
   last_name VARCHAR ( 255 ),
   username VARCHAR ( 255 ),
-  is_admin BOOLEAN,
+  is_admin VARCHAR ( 255 ),
+  is_member BOOLEAN DEFAULT FALSE,
   password VARCHAR ( 255 ),
   salt VARCHAR (255)
 );

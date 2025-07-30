@@ -51,7 +51,7 @@ const log_in_user = [
             res.json({ user: req.user, is_auth: true, msg: "Authenticated successfully" })
         }
         else {
-            res.json({ user: null, is_auth: false, msg: "Authenticatin failed" })
+            res.json({ user: null, is_auth: false, msg: "Authentication failed" })
         }
     }
 ]
@@ -74,13 +74,24 @@ function logout(req, res, next) {
     res.json({ is_logout: true, err: null })
 }
 
+async function become_member(req, res) {
+    if(req.body.secret === "ali") {
+        await db.set_member(req.user.id)
+        res.json({success: true, error: null})
+    }
+    else {
+        res.json({success: false, error: "Secret not valid"})
+    }
+}
+
+// Messages
 async function create_message(req, res) {
-    await db.create_message({...req.body, user_id: req.user.id})
+    await db.create_message({ ...req.body, user_id: req.user.id })
     res.end()
 }
 
 async function update_message(req, res, id) {
-    await db.update_message({...req.body, id})
+    await db.update_message({ ...req.body, id })
     res.end()
 }
 
@@ -96,7 +107,9 @@ module.exports = {
     log_in_user,
     check_already_auth,
     logout,
+    become_member,
+    
     create_message,
     update_message,
-    delete_message
+    delete_message,
 }
