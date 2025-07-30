@@ -1,20 +1,33 @@
 import { useEffect, useState } from "react"
 import Message from "./components/Message";
 import './styles/main.css'
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { fetch_messages } from "./lib/common";
+import { check_already_auth } from "./lib/common";
 
 function App() {
   const [messages, set_messages] = useState(null)
   const [fetch_signal, set_fetch_signal] = useState(true)
+  const navigate = useNavigate()
 
   useEffect(() => {
+    (async () => {
+      const result = await check_already_auth();
+      if (result.is_auth) {
+        navigate(`/users/${result.json.user.username}/dashboard`, {
+          state: { user: result.json.user },
+        });
+      } else {
+        navigate('/users/login');
+      }
+    })();
+
     async function fetch_data() {
       set_messages(await fetch_messages())
       set_fetch_signal(false)
     }
-    fetch_signal &&  fetch_data()
-  }, [fetch_signal])
+    fetch_signal && fetch_data()
+  }, [fetch_signal, navigate])
 
   return (
     <>
@@ -25,7 +38,7 @@ function App() {
       </nav>
       {messages ?
         (<ul>
-          {messages.map(message => <Message key={message.id} message={message} set_fetch_signal={set_fetch_signal}/>)}
+          {messages.map(message => <Message key={message.id} message={message} set_fetch_signal={set_fetch_signal} />)}
         </ul>)
         : <span> Loading </span>
       }
