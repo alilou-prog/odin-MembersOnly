@@ -75,7 +75,7 @@ function logout(req, res, next) {
 }
 
 async function become_member(req, res) {
-    if(req.body.secret === "ali") {
+    if(req.body.secret === process.env.MEMBER_SECRET) {
         await db.set_member(req.user.id)
         res.json({success: true, error: null})
     }

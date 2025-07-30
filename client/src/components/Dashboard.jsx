@@ -47,30 +47,33 @@ export default function Dashboard() {
     return (
         <>
             <h1>Dashborad (Username: {user.username})</h1>
-
-            <section className="become-member">
-                <button onClick={() => show_dialog(become_member_dialog.current)}>Become a member</button>
-                <dialog ref={become_member_dialog}>
-                    <BecomeMember close_dialog={() => close_dialog(become_member_dialog.current)}/>
-                </dialog>
-            </section>
-
-            <section className="logout">   
+            <nav className="actions">
+                {!user.is_member && <button onClick={() => show_dialog(become_member_dialog.current)}>Become a member</button>}
+                <button onClick={() => show_dialog(create_msg_dialog.current)}>Create message</button>
                 <button onClick={logout}>Logout</button>
+            </nav>
+
+            <div className="dialogs">
+                <dialog ref={become_member_dialog}>
+                    <BecomeMember close_dialog={() => close_dialog(become_member_dialog.current)} />
+                </dialog>
+                <dialog ref={create_msg_dialog}>
+                    <CreateMessage close_dialog={() => close_dialog(create_msg_dialog.current)} set_fetch_signal={set_fetch_signal} />
+                </dialog>
+            </div>
+
+            <section className="logout">
                 <div className="errors">
                     {JSON.stringify(err)}
                 </div>
             </section>
 
             <section className="messages">
-                <button onClick={() => show_dialog(create_msg_dialog.current)}>Create message</button>
-                <dialog ref={create_msg_dialog}>
-                    <CreateMessage close_dialog={() => close_dialog(create_msg_dialog.current)} set_fetch_signal={set_fetch_signal}/>
-                </dialog>
+
                 <div className="messages">
                     {messages ?
                         (<ul>
-                            {messages.map(message => <Message key={message.id} message={message} set_fetch_signal={set_fetch_signal}/>)}
+                            {messages.map(message => <Message key={message.id} message={message} set_fetch_signal={set_fetch_signal} />)}
                         </ul>)
                         : <span> Loading </span>
                     }
