@@ -19,7 +19,26 @@ async function create_user(user) {
         ])
 }
 
+async function create_message(message) {
+    await pool.query(`INSERT INTO "Message" (title, text, user_id)
+        VALUES
+        ($1, $2, $3)`, [message.title, message.text, message.user_id])
+}
+
+async function update_message(message) {
+    await pool.query(`UPDATE "Message"
+        SET title = $1, text = $2 WHERE id = $3`,
+    [message.title, message.text, message.id])
+}
+
+async function delete_message(id) {
+    await pool.query(`DELETE FROM "Message" WHERE id = $1`, [id])
+}
+
 module.exports = {
     get_all_messages,
-    create_user
+    create_user,
+    create_message,
+    delete_message,
+    update_message
 }

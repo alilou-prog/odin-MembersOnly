@@ -7,7 +7,13 @@ function get_index(req, res) {
 }
 
 async function get_all_messages(req, res) {
-    res.json(await db.get_all_messages());
+    const messages = await db.get_all_messages();
+    if (req.user) {
+        res.json(messages);
+    }
+    else {
+        res.json(messages.map(message => { return { id: message.id, title: message.title, text: message.text } }))
+    }
 }
 
 const { body, validationResult } = require("express-validator");
@@ -62,10 +68,25 @@ function check_already_auth(req, res) {
 function logout(req, res, next) {
     req.logout((err) => {
         if (err) {
-            res.json({is_logout: false, err})
+            res.json({ is_logout: false, err })
         }
     });
-    res.json({is_logout: true, err: null})
+    res.json({ is_logout: true, err: null })
+}
+
+async function create_message(req, res) {
+    await db.create_message({...req.body, user_id: req.user.id})
+    res.end()
+}
+
+async function update_message(req, res, id) {
+    await db.update_message({...req.body, id})
+    res.end()
+}
+
+async function delete_message(req, res, id) {
+    await db.delete_message(id)
+    res.end()
 }
 
 module.exports = {
@@ -75,4 +96,7 @@ module.exports = {
     log_in_user,
     check_already_auth,
     logout,
+    create_message,
+    update_message,
+    delete_message
 }
