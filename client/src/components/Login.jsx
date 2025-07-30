@@ -1,29 +1,26 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { check_already_auth } from "../lib/common";
 
 function LoginProxy() {
     const navigate = useNavigate();
+
     useEffect(() => {
-        async function check_already_auth() {
-            const response = await fetch('/api/users/login');
-
-            const json = await response.json();
-            if(json.is_auth) {
-                navigate(`/users/${json.user.username}/dashbord`, {state: {user: json.user}})
+        (async () => {
+            const result = await check_already_auth();
+            if (result.is_auth) {
+                navigate(`/users/${result.json.user.username}/dashboard`, {
+                    state: { user: result.json.user },
+                });
+            } else {
+                navigate('/users/login');
             }
-            else {
-                navigate('/users/login')
-            }
-        }
-        check_already_auth();
-    }, []);
+        })();
+    }, [navigate]);
 
-    return (
-        <>
-            <h1>Loading</h1>
-        </>
-    )
+    return <h1>Loading</h1>;
 }
+
 
 function Login() {
     const navigate = useNavigate();
@@ -41,7 +38,7 @@ function Login() {
         });
         const json = await response.json();
         if (json.is_auth) {
-            navigate(`/users/${json.user.username}/dashbord`, {state: {user: json.user}})
+            navigate(`/users/${json.user.username}/dashboard`, { state: { user: json.user } })
         }
         else {
             set_err(json.msg)
@@ -68,4 +65,4 @@ function Login() {
     );
 }
 
-export {LoginProxy, Login}
+export { LoginProxy, Login }

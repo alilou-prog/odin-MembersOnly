@@ -1,8 +1,10 @@
 import { useState } from "react"
 import Form from "./Form"
+import styles from './styles.module.css'
 
 export default function CrudElement({ elem }) {
     const [is_updating, set_is_updating] = useState(false)
+    const [err, set_err] = useState("")
 
     async function update(e) {
         e.preventDefault()
@@ -18,6 +20,8 @@ export default function CrudElement({ elem }) {
             elem.set_fetch_signal(true)
         }
         else {
+            const json = await res.json()
+            set_err(json.err)
             console.error("UPDATE failed")
         }
         set_is_updating(false)
@@ -32,6 +36,8 @@ export default function CrudElement({ elem }) {
             elem.set_fetch_signal(true)
         }
         else {
+            const json = await res.json()
+            set_err(json.err)
             console.error("DELETE failed")
         }
     }
@@ -42,10 +48,15 @@ export default function CrudElement({ elem }) {
 
     return (
         <>
-            {is_updating ? <Form form={{...elem.update_form, on_submit: update}} /> : elem.content}
-            <div className="control">
-                {is_updating ? null : <button onClick={start_updating}>Update</button>}
-                <button onClick={handle_delete}>Delete</button>
+            <div className={styles.crud_element}>
+                {is_updating ? <Form form={{ ...elem.update_form, on_submit: update }} /> : elem.content}
+                <div className="control">
+                    {is_updating ? null : <button onClick={start_updating}>Update</button>}
+                    <button onClick={handle_delete}>Delete</button>
+                </div>
+                <div className="errors">
+                    <span>{err}</span>
+                </div>
             </div>
         </>
     )

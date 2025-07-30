@@ -18,7 +18,7 @@ function is_auth(req, res, next) {
     next()
   }
   else {
-    res.status(401).end("Not authenticated")
+    res.status(401).json({err: "Not authenticated"})
   }
 }
 

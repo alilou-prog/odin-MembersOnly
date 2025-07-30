@@ -9,3 +9,11 @@
     display: flex;
     gap: 8px;
 }
+
+.crud_element {  
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    border-radius: 10px;
+    border: 1px solid gray;
+}

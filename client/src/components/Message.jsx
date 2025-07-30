@@ -2,11 +2,11 @@ import CrudElement from "../lib/CrudElement"
 
 export default function Message({ message, set_fetch_signal }) {
     const content = (
-        <>
+        <div className="content">
             <h2>{message.title}</h2>
             <p>{message.text}</p>
             <p>{message.user_id}</p>
-        </>
+        </div>
     )
 
     const update_form = {
