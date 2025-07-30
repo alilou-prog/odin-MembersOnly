@@ -30,6 +30,7 @@ function App() {
   return (
     <>
       <h1>Home page</h1>
+      <section className="info">See README.md for the user credentials</section>
       <nav className="auth">
         <Link to="/users/login">Login</Link>
         <Link to="/users/signup">Sign up</Link>
